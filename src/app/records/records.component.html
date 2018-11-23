@@ -1,0 +1,46 @@
+<div class="container">
+    <div *ngIf="employee" class="row">
+        <div class="col-md-6">
+            <h4>Available Balance: {{employee.availableLeave}}</h4>
+        </div>
+        <div class="col-md-6 form-group">
+            <label>Filter</label>
+            <select class="form-control" [(ngModel)]="rowFilter">
+                <option></option>
+                <option *ngFor="let code of statusCodes" value="{{code}}">{{code}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-light table-bordered" id="request-records">
+            <thead>
+                <tr>
+                    <th scope="col">Status</th>
+                    <th scope="col">From</th>
+                    <th scope="col">To</th>
+                    <th scope="col">Days</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Request ID</th>
+                    <th scope="col">Cancel</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let req of leaveRequests; let i = index" class="{{rowStatus(req.status)}}">
+
+                    <td *ngIf="!rowFilter || req.status == rowFilter">{{req.status}}</td>
+                    <td *ngIf="!rowFilter || req.status == rowFilter">{{req.fromDate| date: "dd/MM/yyyy"}}</td>
+                    <td *ngIf="!rowFilter || req.status == rowFilter">{{req.toDate | date: "dd/MM/yyyy"}}</td>
+                    <td *ngIf="!rowFilter || req.status == rowFilter">{{req.length}}</td>
+                    <td *ngIf="!rowFilter || req.status == rowFilter">{{req.type}}</td>
+                    <!-- TODO: change to human readable rather than code -->
+                    <td *ngIf="!rowFilter || req.status == rowFilter">{{req.ID}}</td>
+                    <td *ngIf="!rowFilter || req.status == rowFilter">
+                        <i *ngIf="req.status == 'Approved' || req.status == 'Pending'" (click)="cancelLeaveRequest(i)"
+                            class="material-icons cancel-btn">cancel</i>
+                        <i *ngIf="req.status != 'Approved' && req.status != 'Pending'" class="material-icons cancel-btn-disabled">cancel</i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

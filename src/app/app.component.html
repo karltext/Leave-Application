@@ -1,0 +1,13 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<nav class="navbar navbar-light bg-light justify-content-between">
+  <a class="navbar-brand" routerLink="/">My Leave Requests</a>
+  <a *ngIf="isRoot()" routerLink="/register">
+    <button class="btn btn-success my-sm-0" type="link">New Request</button>
+  </a>
+  <a *ngIf="!isRoot()" routerLink="/">
+    <button class="btn btn-light my-sm-0" type="link">Back</button>
+  </a>
+</nav>
+<main>
+  <router-outlet></router-outlet>
+</main>

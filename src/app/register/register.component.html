@@ -1,0 +1,64 @@
+<div class="container">
+  <div>
+    <h2 class="page-header">New Request</h2>
+    <div *ngIf="employee" class="row">
+        <div class="col-md-3">Employee ID: {{employee.ID}}</div>
+        <div class="col-md-3">Employee Name: {{employee.name}}</div>
+        <div class="col-md-3">Available Balance: {{employee.availableLeave}}</div>  
+    </div>
+  </div>
+  <div class="row">
+    <div [hidden]="validLeaveRequest" class="alert alert-danger">{{validationMessage}}</div>
+  </div>
+  <div class="row">
+    <form (submit)="newLeaveRequest({
+        type: type.value, 
+        fromDate: fromDate.value, 
+        toDate: toDate.value, 
+        reason: reason.value, 
+        contact: contact.value,
+        dayPeriod: dayPeriod.value
+      })">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="fromDate">From</label>
+            <input (blur)="datePicker(fromDate.value, toDate.value)" 
+              type="date" class="form-control" #fromDate required>
+          </div>
+          <div class="form-group">
+              <label for="toDate">To</label>
+              <input (blur)="datePicker(fromDate.value, toDate.value)"  
+              type="date" class="form-control" #toDate required>
+          </div>
+          <div [hidden]="!dayPeriodField" class="form-group">
+            <label for="dayPeriod">Full/AM/PM</label>
+            <select class="form-control" #dayPeriod>
+                <option></option>
+                <option value="AM">AM</option>
+                <option value="AM">PM</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="requestType">Request Type</label>
+            <select class="form-control" #type required>
+              <option></option>
+              <option *ngFor="let item of requestTypes | keyvalue" [value]="item.key">{{item.value}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="reason">Reason</label>
+            <textarea class="form-control" rows="3" #reason name="reason" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="contact">Contact</label>
+            <input type="number" class="form-control" #contact>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+  </div>
+</div>
